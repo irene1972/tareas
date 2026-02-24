@@ -16,6 +16,9 @@ img{
     height: auto;
     display: block;
 }
+button[type="submit"]{
+    margin: 1rem 0;
+}
 .contenedor{
     max-width: 1200px;
     margin:0 auto;
