@@ -36,6 +36,16 @@ export class User {
 
     }
 
+    async getByEmail(email) {
+        try {
+            const result = await pool.query('SELECT * FROM users WHERE email=?',[email]);
+            return result;
+        } catch (error) {
+            return false;
+        }
+
+    }
+
     async getByToken(token) {
         try {
             const result = await pool.query('SELECT * FROM users WHERE token=?', [token]);
@@ -57,7 +67,7 @@ export class User {
     }
 
     async confirmUser(email) {
-        
+
         try {
             const result = await pool.query('UPDATE users SET confirm=1, token=null WHERE email=?', [
                 email

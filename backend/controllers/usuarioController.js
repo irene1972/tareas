@@ -1,4 +1,4 @@
-import { encriptarPassword } from '../helpers/password.js';
+import { encriptarPassword, matchPassword } from '../helpers/password.js';
 import { crearToken, decodificarToken } from '../helpers/token.js';
 import { User } from '../models/User.js';
 import enviarEmail from '../helpers/email.js';
@@ -56,6 +56,37 @@ const createUser = async (req, res) => {
 
 }
 
+const loginUser = async (req, res) => {
+    const { email, password } = req.body;
+
+    if(!email || !password){
+        return res.status(400).json({ error: 'Los dos campos son obligatorios' });
+    }
+
+    try {
+        const usuario = new User();
+
+        const resultado = await usuario.getByEmail(email);
+
+        if (resultado[0].length === 0) {
+            return res.status(500).json({ error: 'El usuario no está registrado' });
+        }
+        const usuarioEncontrado = resultado[0][0];
+
+        const matched = await matchPassword(password, usuarioEncontrado.password);
+
+        if (matched && usuarioEncontrado.confirm===1) {
+            //res.json({ mensaje: 'Usuario logueado correctamente' });
+            res.json(usuarioEncontrado);
+        } else {
+            return res.status(400).json({ error: 'El usuario o el password son incorrectos, o el usuario no ha confirmado su cuenta' });
+        }
+
+    } catch (error) {
+        return res.status(500).json({ error: 'Ha habido un error al consultar los datos' });
+    }
+}
+
 const confirmar = async (req, res) => {
 
     const { token } = req.body;
@@ -89,5 +120,6 @@ const confirmar = async (req, res) => {
 export {
     getUsers,
     createUser,
+    loginUser,
     confirmar
 }

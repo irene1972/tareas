@@ -74,7 +74,10 @@ export class Login {
         this.mensaje = data.mensaje;
         this.tipo = true;
 
-        //this.router.navigate(['/home']);
+        delete data.password;
+        delete data.token;
+        localStorage.setItem('usuarioTareas',JSON.stringify(data));
+        this.router.navigate(['/home']);
       })
       .catch(error => console.log(error))
       .finally(() => {
