@@ -1,18 +1,52 @@
 import email from '../helpers/email.js';
+import { encriptarPassword } from '../helpers/password.js';
 import { User } from '../models/User.js';
 
-const getUsers=async(req,res)=>{
+const getUsers = async (req, res) => {
     try {
-        const usuario=new User();
-        const resultado=await usuario.getAll();
+        const usuario = new User();
+        const resultado = await usuario.getAll();
         //const resultado=await pool.query('SELECT * FROM usuarios');
-        res.json(resultado[0]);
+        if (resultado[0]) {
+            res.json(resultado[0]);
+        } else {
+            return res.status(500).json({ error: 'Ha habido un error al consultar la base de datos' });
+        }
     } catch (error) {
-        return res.status(500).json({error:'Ha habido un error al consultar la base de datos'});
+        return res.status(500).json({ error: 'Ha habido un error al consultar los datos' });
     }
-    
+
 }
 
+const createUser = async (req, res) => {
+    
+        const {nombre,apellidos,email,password}=req.body;
+        
+        if(!nombre | !apellidos | !email | !password){
+            return res.status(400).json({error:'Todos los campos son obligatorios'});
+        }
+    
+        const newPassword=await encriptarPassword(password);
+
+        if(newPassword==='error'){
+            return res.status(500).json({error:'Ha habido un error al encriptar el password'});
+        }
+
+
+        try {
+            const usuario=new User(nombre,apellidos,email,newPassword);
+            const resultado=await usuario.insert();
+            if(resultado[0].affectedRows===1){
+                res.json({mensaje:'Datos insertados correctamente'});
+            }else{
+                return res.status(500).json({error:'Ha habido un error al insertar los datos en la bd'});
+            }
+        } catch (error) {
+            return res.status(500).json({error:'Ha habido un error al insertar los datos'});
+        }
+        
+}
+/*
 const envioEmail=async (req, res) => {
     //res.json('Funciona!');
 
@@ -30,8 +64,8 @@ const envioEmail=async (req, res) => {
         return res.status(400).json({error:'Ha habido un error'});
     }
 }
-
+*/
 export {
-    envioEmail,
-    getUsers
+    getUsers,
+    createUser
 }

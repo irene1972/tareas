@@ -2,9 +2,9 @@ import pool from '../config/db.js';
 //import mysql from 'mysql2/promise';
 
 export class User{
-    constructor(role,name,surname,email,password){
+    constructor(name,surname,email,password){
         this.id=0;
-        this.role=role;
+        this.role='ROLE_USER';
         this.name=name;
         this.surname=surname;
         this.email=email;
@@ -32,5 +32,16 @@ export class User{
         return result;
         */
         
+    }
+
+    async insert(){
+        //try {
+            const result=await pool.query('INSERT INTO users (role,name,surname,email,password,created_at) VALUES (?,?,?,?,?,?)',[
+                this.role,this.name,this.surname,this.email,this.password,this.created_at
+            ]);
+            return result;
+        //} catch (error) {
+           // return false;
+        //}
     }
 }
