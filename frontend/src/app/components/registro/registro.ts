@@ -75,7 +75,9 @@ export class Registro {
         this.mensaje = data.mensaje;
         this.tipo = true;
 
-        //this.router.navigate(['/home']);
+        this.router.navigate(['/login'], {
+          queryParams: { code: 1 }
+        });
       })
       .catch(error => console.log(error))
       .finally(() => {
