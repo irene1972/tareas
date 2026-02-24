@@ -2,10 +2,15 @@
     <h2><a [routerLink]="['/home']">TAREAS</a></h2>
     <nav>
         <ul class="lista-flex">
+            @if(isLogged){
             <li><a [routerLink]="['/home']" routerLinkActive="activo">Home</a></li>
             <li><a [routerLink]="['/#']" routerLinkActive="activo">Mis tareas</a></li>
+            }
             <li><a [routerLink]="['/login']" routerLinkActive="activo">Login</a></li>
             <li><a [routerLink]="['/registro']" routerLinkActive="activo">Registro</a></li>
+            @if(isLogged){
+            <li><a (click)="cerrarSesion()">Cerrar Sesión</a></li>
+            }
         </ul>
     </nav>
 </section>

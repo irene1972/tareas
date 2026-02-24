@@ -11,6 +11,9 @@ body{
 h1{
     padding:1rem 0;
 }
+a{
+    cursor: pointer;
+}
 img{
     width: 100%;
     height: auto;
