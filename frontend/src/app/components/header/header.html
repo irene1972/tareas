@@ -3,11 +3,14 @@
     <nav>
         <ul class="lista-flex">
             @if(isLogged){
-            <li><a [routerLink]="['/home']" routerLinkActive="activo">Home</a></li>
+            <li><a [routerLink]="['/home']" routerLinkActive="activo">Inicio</a></li>
             <li><a [routerLink]="['/#']" routerLinkActive="activo">Mis tareas</a></li>
+            <li><a [routerLink]="['/#']" routerLinkActive="activo">{{usuarioLogueado.name}}</a></li>
             }
+            @if(!isLogged){
             <li><a [routerLink]="['/login']" routerLinkActive="activo">Login</a></li>
             <li><a [routerLink]="['/registro']" routerLinkActive="activo">Registro</a></li>
+            }
             @if(isLogged){
             <li><a (click)="cerrarSesion()">Cerrar Sesión</a></li>
             }

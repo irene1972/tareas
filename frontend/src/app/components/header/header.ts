@@ -4,24 +4,26 @@ import { isLogged } from '../../shared/utils/funciones';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink,RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
 export class Header {
 
-  isLogged:boolean=false;
+  isLogged: boolean = false;
+  usuarioLogueado:any={};
 
-  constructor(private cd: ChangeDetectorRef,private router: Router){}
+  constructor(private cd: ChangeDetectorRef, private router: Router) { }
 
-  ngOnInit(){
-    if(isLogged()){
-      this.isLogged=true;
-      this.cd.detectChanges();
+  ngOnInit() {
+    if (isLogged()) {
+      this.isLogged = true;
+      this.usuarioLogueado = isLogged();
+      console.log(this.usuarioLogueado);
     }
   }
 
-  cerrarSesion(){
+  cerrarSesion() {
     localStorage.removeItem('usuarioTareas');
     this.router.navigate(['/login']);
   }

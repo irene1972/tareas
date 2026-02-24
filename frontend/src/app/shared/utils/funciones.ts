@@ -4,19 +4,18 @@ export function isAdmin() {
     return false;
   } else {
     const usuario = JSON.parse(usuarioString);
-    if (usuario.role !== 'ROLE_ADMIN') return false;
+    if (usuario.role !== 'ROLE_ADMIN') return usuario;
     else return true;
   }
 }
 
 export function isLogged() {
   const usuarioString = localStorage.getItem('usuarioTareas');
-  console.log(usuarioString);
   if (!usuarioString) {
     return false;
   } else {
     const usuario = JSON.parse(usuarioString);
-    if (usuario.role === 'ROLE_ADMIN' || usuario.role==='ROLE_USER') return true;
+    if (usuario.role === 'ROLE_ADMIN' || usuario.role==='ROLE_USER') return usuario;
     else return false;
   }
 }
