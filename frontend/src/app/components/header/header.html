@@ -1,19 +1,27 @@
 <section class="contenedor contenedor-flex">
     <h2><a [routerLink]="['/home']">TAREAS</a></h2>
-    <nav>
-        <ul class="lista-flex">
-            @if(isLogged){
-            <li><a [routerLink]="['/home']" routerLinkActive="activo">Inicio</a></li>
-            <li><a [routerLink]="['/#']" routerLinkActive="activo">Mis tareas</a></li>
-            <li><a [routerLink]="['/#']" routerLinkActive="activo">{{usuarioLogueado.name}}</a></li>
-            }
-            @if(!isLogged){
-            <li><a [routerLink]="['/login']" routerLinkActive="activo">Login</a></li>
-            <li><a [routerLink]="['/registro']" routerLinkActive="activo">Registro</a></li>
-            }
-            @if(isLogged){
-            <li><a (click)="cerrarSesion()">Cerrar Sesión</a></li>
-            }
-        </ul>
-    </nav>
+    <div class="nav-container">
+        <nav>
+            <ul class="lista-flex">
+                @if(isLogged){
+                <li><a [routerLink]="['/home']" routerLinkActive="activo">Inicio</a></li>
+                <li><a [routerLink]="['/#']" routerLinkActive="activo">Mis tareas</a></li>
+                }
+            </ul>
+        </nav>
+        <nav>
+            <ul class="lista-flex">
+                @if(isLogged){
+                <li><a [routerLink]="['/#']" routerLinkActive="activo">{{usuarioLogueado.name}}</a></li>
+                <li><a (click)="cerrarSesion()">Cerrar Sesión</a></li>
+                }
+            </ul>
+            <ul class="lista-flex">
+                @if(!isLogged){
+                <li><a [routerLink]="['/login']" routerLinkActive="activo">Login</a></li>
+                <li><a [routerLink]="['/registro']" routerLinkActive="activo">Registro</a></li>
+                }
+            </ul>
+        </nav>
+    </div>
 </section>

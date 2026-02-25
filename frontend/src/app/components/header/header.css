@@ -1,13 +1,18 @@
 .contenedor-flex{
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 }
-
+.nav-container{
+    display: flex;
+    gap: 8rem;
+    align-items: inherit; /* opcional */
+}
 .lista-flex{
     display: flex;
     gap:1rem;
     list-style-type: none;
+    margin-right: 1rem;
 }
 
 a{
