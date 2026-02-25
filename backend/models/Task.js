@@ -13,7 +13,7 @@ export class Task{
 
     async getAll(){
         try {
-            const result=await pool.query('SELECT * FROM tasks');
+            const result=await pool.query('SELECT * FROM tasks ORDER BY id DESC');
             return result;
         } catch (error) {
             return false;

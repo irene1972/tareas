@@ -1,1 +1,33 @@
-<p>mis-tareas works!</p>
+<section>
+    <h1>Todas las tareas</h1>
+    <table>
+        <tr>
+            <th>Tarea</th>
+            <th>Prioridad</th>
+            <th>Horas presupuestadas</th>
+            <th>Acciones</th>
+        </tr>
+        @for(tarea of tareas; track tarea.id){
+        <tr>
+            <td>{{tarea.title}}</td>
+            <td>
+                @if(tarea.priority==='hight'){
+                    Alta
+                }
+                @if(tarea.priority==='medium'){
+                    Media
+                }
+                @if(tarea.priority==='low'){
+                    Baja
+                }
+            </td>
+            <td>{{tarea.hours}}</td>
+            <td class="buttons">
+                <a href="">Ver</a>
+                <a href="" class="btn-edit">Editar</a>
+                <a href="" class="btn-delete">Eliminar</a>
+            </td>
+        </tr>
+        }
+    </table>
+</section>
