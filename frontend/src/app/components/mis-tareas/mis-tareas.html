@@ -1,5 +1,6 @@
 <section>
     <h1>Todas las tareas</h1>
+    <div [class.text-danger]="tipo===false" [class.text-success]="tipo===true">{{mensaje}}</div>
     <table>
         <tr>
             <th>Tarea</th>
@@ -26,7 +27,7 @@
             <td class="buttons">
                 <a [routerLink]="['/detalle/',tarea.id]">Ver</a>
                 <a href="" class="btn-edit">Editar</a>
-                <a href="" class="btn-delete">Eliminar</a>
+                <a (click)="borrarTarea(tarea.id)" class="btn-delete">Eliminar</a>
             </td>
         </tr>
         }

@@ -41,4 +41,27 @@ export class MisTareas {
   chPriority(priority:string){
     return choosePriority(priority);
   }
+
+  async borrarTarea(id:number){
+    console.log(id);
+
+    await fetch(`${environment.apiUrl}/tareas/eliminar/${id}`,{
+      method:'DELETE'
+    })
+        .then(response => response.json())
+        .then(data => {
+          //console.log(data);
+          if (data.error) {
+            this.mensaje = data.error;
+            return;
+          }
+          this.mensaje = data.mensaje;
+          this.tipo = true;
+          location.reload();
+        })
+        .catch()
+        .finally(() => {
+          this.cd.detectChanges();
+        });
+  }
 }

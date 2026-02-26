@@ -32,7 +32,25 @@ export class Task{
         } catch (error) {
             return false;
         }
+    }
 
-        
+    async insert(){
+        try {
+            const result=await pool.query('INSERT INTO tasks (user_id,title,content,priority,hours,created_at) VALUES (?,?,?,?,?,?)',[
+                this.user_id,this.title,this.content,this.priority,this.hours,this.created_at
+            ]);
+            return result;
+        } catch (error) {
+            return false;
+        }
+    }
+
+    async delete(id){
+        try {
+            const result=await pool.query('DELETE FROM tasks WHERE id=?',[id]);
+            return result;
+        } catch (error) {
+            return false;
+        }
     }
 }
