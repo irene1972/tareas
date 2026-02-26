@@ -6,12 +6,14 @@ import { Login } from './components/login/login';
 import { Confirmar } from './components/confirmar/confirmar';
 import { MisTareas } from './components/mis-tareas/mis-tareas';
 import { Detalle } from './components/mis-tareas/detalle/detalle';
+import { CrearTarea } from './components/mis-tareas/crear-tarea/crear-tarea';
 
 export const routes: Routes = [
     {path:'',pathMatch:'full',redirectTo:'home'},
     {path:'home',component:Home},
     {path:'mis-tareas',component:MisTareas},
     {path:'detalle/:id',component:Detalle},
+    {path:'crear-tarea',component:CrearTarea},
     {path:'registro',component:Registro},
     {path:'login',component:Login},
     {path:'confirmar/:token',component:Confirmar},

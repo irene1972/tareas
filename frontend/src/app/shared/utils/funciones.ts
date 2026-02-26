@@ -21,7 +21,7 @@ export function isLogged() {
 }
 
 export function choosePriority(priority:string):string {
-  if (priority === 'hight') {
+  if (priority === 'high') {
     return 'Alta';
   }
   if (priority === 'medium') {
