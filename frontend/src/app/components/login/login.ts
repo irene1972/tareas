@@ -77,7 +77,9 @@ export class Login {
         delete data.password;
         delete data.token;
         localStorage.setItem('usuarioTareas',JSON.stringify(data));
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home'],{
+          queryParams:{code:1}
+        });
       })
       .catch(error => console.log(error))
       .finally(() => {

@@ -10,7 +10,8 @@
         @for(tarea of tareas; track tarea.id){
         <tr>
             <td>{{tarea.title}}</td>
-            <td>
+            <td>{{chPriority(tarea.priority)}}</td>
+            <!--<td>
                 @if(tarea.priority==='hight'){
                     Alta
                 }
@@ -20,10 +21,10 @@
                 @if(tarea.priority==='low'){
                     Baja
                 }
-            </td>
+            </td>-->
             <td>{{tarea.hours}}</td>
             <td class="buttons">
-                <a href="">Ver</a>
+                <a [routerLink]="['/detalle/',tarea.id]">Ver</a>
                 <a href="" class="btn-edit">Editar</a>
                 <a href="" class="btn-delete">Eliminar</a>
             </td>

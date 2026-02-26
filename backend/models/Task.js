@@ -18,6 +18,20 @@ export class Task{
         } catch (error) {
             return false;
         }
+    }
+
+    async getById(id){
+        try {
+            const result=await pool.query(`
+                SELECT t.*,u.name,u.surname,u.email,u.created_at  
+                    FROM tasks t 
+                    INNER JOIN users u ON u.id=t.user_id 
+                    WHERE t.id=?
+                `,[id]);
+            return result;
+        } catch (error) {
+            return false;
+        }
 
         
     }

@@ -1,10 +1,11 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { isLogged } from '../../shared/utils/funciones';
+import { choosePriority, isLogged } from '../../shared/utils/funciones';
 import { environment } from '../../../environments/environment';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-mis-tareas',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './mis-tareas.html',
   styleUrl: './mis-tareas.css',
 })
@@ -35,5 +36,9 @@ export class MisTareas {
           this.cd.detectChanges();
         });
     }
+  }
+
+  chPriority(priority:string){
+    return choosePriority(priority);
   }
 }
