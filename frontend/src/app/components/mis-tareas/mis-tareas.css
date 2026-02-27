@@ -23,3 +23,10 @@ table td,th{
     border:1px solid red;
     background-color: red;
 }
+.text-danger{
+    color: red;
+}
+.text-success{
+    background-color: green;
+    color: white !important;
+}

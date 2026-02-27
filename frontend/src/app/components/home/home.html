@@ -1,1 +1,24 @@
-<div [class.text-danger]="tipo===false" [class.text-success]="tipo===true">{{mensaje}}</div>
+<section>
+    <h1>Todas las tareas</h1>
+    <div [class.text-danger]="tipo===false" [class.text-success]="tipo===true">{{mensaje}}</div>
+    <table>
+        <tr>
+            <th>Tarea</th>
+            <th>Prioridad</th>
+            <th>Horas presupuestadas</th>
+            <th>Acciones</th>
+        </tr>
+        @for(tarea of tareas; track tarea.id){
+        <tr>
+            <td>{{tarea.title}}</td>
+            <td>{{chPriority(tarea.priority)}}</td>
+            <td>{{tarea.hours}}</td>
+            <td class="buttons">
+                <a [routerLink]="['/detalle/',tarea.id]">Ver</a>
+                <a [routerLink]="['/editar/',tarea.id]" class="btn-edit">Editar</a>
+                <a (click)="borrarTarea(tarea.id)" class="btn-delete">Eliminar</a>
+            </td>
+        </tr>
+        }
+    </table>
+</section>

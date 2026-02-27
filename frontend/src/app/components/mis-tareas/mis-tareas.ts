@@ -14,11 +14,13 @@ export class MisTareas {
   mensaje:string='';
   tipo:boolean=false;
   tareas:any[]=[];
+  usuarioLogueado:any={};
 
   constructor(private cd: ChangeDetectorRef) { }
 
   async ngOnInit() {
     if (isLogged()) {
+      this.usuarioLogueado=isLogged();
       await fetch(`${environment.apiUrl}/tareas/listar`)
         .then(response => response.json())
         .then(data => {
@@ -29,7 +31,7 @@ export class MisTareas {
           }
           this.mensaje = data.mensaje;
           this.tipo = true;
-          this.tareas=data;
+          this.tareas=data.filter((tarea:any)=>tarea.user_id===this.usuarioLogueado.id);
         })
         .catch()
         .finally(() => {

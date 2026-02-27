@@ -1,21 +1,23 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { choosePriority, isLogged } from '../../shared/utils/funciones';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home {
 
-  mensaje:string='';
-  tipo:boolean=false;
+  mensaje: string = '';
+  tipo: boolean = false;
+  tareas: any[] = [];
 
-  constructor(private cd: ChangeDetectorRef,private route: ActivatedRoute) { }
-  
-  ngOnInit(): void {
+  constructor(private cd: ChangeDetectorRef, private route: ActivatedRoute) { }
+
+  async ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const code = params['code'];
       console.log(code);
@@ -28,5 +30,52 @@ export class Home {
       }
 
     });
+
+    if (isLogged()) {
+      await fetch(`${environment.apiUrl}/tareas/listar`)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          if (data.error) {
+            this.mensaje = data.error;
+            return;
+          }
+          this.mensaje = data.mensaje;
+          this.tipo = true;
+          this.tareas = data;
+        })
+        .catch()
+        .finally(() => {
+          this.cd.detectChanges();
+        });
+    }
+  }
+
+
+  chPriority(priority: string) {
+    return choosePriority(priority);
+  }
+
+  async borrarTarea(id: number) {
+    console.log(id);
+
+    await fetch(`${environment.apiUrl}/tareas/eliminar/${id}`, {
+      method: 'DELETE'
+    })
+      .then(response => response.json())
+      .then(data => {
+        //console.log(data);
+        if (data.error) {
+          this.mensaje = data.error;
+          return;
+        }
+        this.mensaje = data.mensaje;
+        this.tipo = true;
+        location.reload();
+      })
+      .catch()
+      .finally(() => {
+        this.cd.detectChanges();
+      });
   }
 }
