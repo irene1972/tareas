@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { isLogged } from '../../shared/utils/funciones';
 import { Tareas } from '../tareas/tareas';
 
@@ -16,9 +16,10 @@ export class Home {
   tipo: boolean = false;
   tareas: any[] = [];
 
-  constructor(private cd: ChangeDetectorRef, private route: ActivatedRoute) { }
+  constructor(private cd: ChangeDetectorRef, private router: Router, private route: ActivatedRoute) { }
 
   async ngOnInit() {
+    if (!isLogged()) this.router.navigate(['/login']);
     this.route.queryParams.subscribe(params => {
       const code = params['code'];
       console.log(code);
@@ -32,23 +33,22 @@ export class Home {
 
     });
 
-    if (isLogged()) {
-      await fetch(`${environment.apiUrl}/tareas/listar`)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          if (data.error) {
-            this.mensaje = data.error;
-            return;
-          }
-          this.mensaje = data.mensaje;
-          this.tipo = true;
-          this.tareas = data;
-        })
-        .catch()
-        .finally(() => {
-          this.cd.detectChanges();
-        });
-    }
+    await fetch(`${environment.apiUrl}/tareas/listar`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        if (data.error) {
+          this.mensaje = data.error;
+          return;
+        }
+        this.mensaje = data.mensaje;
+        this.tipo = true;
+        this.tareas = data;
+      })
+      .catch()
+      .finally(() => {
+        this.cd.detectChanges();
+      });
+
   }
 }

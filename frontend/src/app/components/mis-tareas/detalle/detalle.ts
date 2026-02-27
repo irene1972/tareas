@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { DatePipe } from '@angular/common';
-import { choosePriority } from '../../../shared/utils/funciones';
+import { choosePriority, isLogged } from '../../../shared/utils/funciones';
 
 @Component({
   selector: 'app-detalle',
@@ -17,9 +17,10 @@ export class Detalle {
   tarea:any={};
   priority:string='';
 
-  constructor(private cd: ChangeDetectorRef,private route: ActivatedRoute) { }
+  constructor(private cd: ChangeDetectorRef,private router: Router,private route: ActivatedRoute) { }
 
   ngOnInit() {
+    if (!isLogged()) this.router.navigate(['/login']);
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       console.log(id);

@@ -4,8 +4,9 @@ export function isAdmin() {
     return false;
   } else {
     const usuario = JSON.parse(usuarioString);
-    if (usuario.role !== 'ROLE_ADMIN') return usuario;
-    else return true;
+    console.log(usuario);
+    if (usuario.role === 'ROLE_ADMIN') return usuario;
+    else return false;
   }
 }
 

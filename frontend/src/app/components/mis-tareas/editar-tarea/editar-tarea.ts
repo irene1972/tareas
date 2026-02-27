@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { isLogged } from '../../../shared/utils/funciones';
+import { isAdmin, isLogged } from '../../../shared/utils/funciones';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -15,6 +15,7 @@ export class EditarTarea {
   mensaje: string = '';
   tipo: boolean = false;
   usuarioLogueado: any = {};
+  isAdmin:any=false;
   tarea:any={};
   tarea_id:string | null='';
 
@@ -55,6 +56,7 @@ export class EditarTarea {
 
   ngOnInit() {
     this.usuarioLogueado = isLogged();
+    this.isAdmin=isAdmin();
     this.route.paramMap.subscribe(params => {
           const id = params.get('id');
           console.log(id);
@@ -69,8 +71,10 @@ export class EditarTarea {
               }
               
               this.tarea=data;
-
-              if(this.tarea.user_id !== this.usuarioLogueado.id){
+              console.log(this.tarea.user_id);
+              console.log(this.usuarioLogueado.id);
+              console.log(this.isAdmin);
+              if(!(this.tarea.user_id === this.usuarioLogueado.id || this.isAdmin)){
                 this.router.navigate(['/home']);
               }
 

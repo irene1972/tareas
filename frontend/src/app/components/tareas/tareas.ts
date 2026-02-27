@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { choosePriority, isLogged } from '../../shared/utils/funciones';
+import { choosePriority, isAdmin, isLogged } from '../../shared/utils/funciones';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -13,6 +13,7 @@ export class Tareas {
   mensaje:string='';
   tipo:boolean=false;
   usuarioLogueado: any = {};
+  isAdmin: any = false;
 
   @Input() titulo:string='';
   @Input() tareas:any[]=[];
@@ -21,6 +22,7 @@ export class Tareas {
 
   ngOnInit(){
     if(isLogged()) this.usuarioLogueado=isLogged();
+    if(isAdmin()) this.isAdmin=isAdmin();
   }
 
   chPriority(priority:string){

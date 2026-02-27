@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { isLogged } from '../../../shared/utils/funciones';
 import { environment } from '../../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-crear-tarea',
@@ -15,7 +16,7 @@ export class CrearTarea {
   tipo: boolean = false;
   usuarioLogueado:any={};
 
-  constructor(private cd: ChangeDetectorRef) {
+  constructor(private cd: ChangeDetectorRef,private router: Router) {
     this.miForm = new FormGroup({
       title: new FormControl('', [
         Validators.required,
@@ -51,6 +52,7 @@ export class CrearTarea {
   }
 
   ngOnInit(){
+    if (!isLogged()) this.router.navigate(['/login']);
     this.usuarioLogueado=isLogged();
   }
 
