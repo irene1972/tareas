@@ -1,11 +1,12 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { choosePriority, isLogged } from '../../shared/utils/funciones';
+import { ActivatedRoute } from '@angular/router';
+import { isLogged } from '../../shared/utils/funciones';
+import { Tareas } from '../tareas/tareas';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink],
+  imports: [Tareas],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -49,33 +50,5 @@ export class Home {
           this.cd.detectChanges();
         });
     }
-  }
-
-
-  chPriority(priority: string) {
-    return choosePriority(priority);
-  }
-
-  async borrarTarea(id: number) {
-    console.log(id);
-
-    await fetch(`${environment.apiUrl}/tareas/eliminar/${id}`, {
-      method: 'DELETE'
-    })
-      .then(response => response.json())
-      .then(data => {
-        //console.log(data);
-        if (data.error) {
-          this.mensaje = data.error;
-          return;
-        }
-        this.mensaje = data.mensaje;
-        this.tipo = true;
-        location.reload();
-      })
-      .catch()
-      .finally(() => {
-        this.cd.detectChanges();
-      });
   }
 }

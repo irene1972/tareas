@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { choosePriority, isLogged } from '../../shared/utils/funciones';
+import { isLogged } from '../../shared/utils/funciones';
 import { environment } from '../../../environments/environment';
-import { RouterLink } from '@angular/router';
+import { Tareas } from '../tareas/tareas';
 
 @Component({
   selector: 'app-mis-tareas',
-  imports: [RouterLink],
+  imports: [Tareas],
   templateUrl: './mis-tareas.html',
   styleUrl: './mis-tareas.css',
 })
@@ -40,30 +40,4 @@ export class MisTareas {
     }
   }
 
-  chPriority(priority:string){
-    return choosePriority(priority);
-  }
-
-  async borrarTarea(id:number){
-    console.log(id);
-
-    await fetch(`${environment.apiUrl}/tareas/eliminar/${id}`,{
-      method:'DELETE'
-    })
-        .then(response => response.json())
-        .then(data => {
-          //console.log(data);
-          if (data.error) {
-            this.mensaje = data.error;
-            return;
-          }
-          this.mensaje = data.mensaje;
-          this.tipo = true;
-          location.reload();
-        })
-        .catch()
-        .finally(() => {
-          this.cd.detectChanges();
-        });
-  }
 }
