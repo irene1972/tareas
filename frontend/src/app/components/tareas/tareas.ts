@@ -12,11 +12,16 @@ import { RouterLink } from '@angular/router';
 export class Tareas {
   mensaje:string='';
   tipo:boolean=false;
+  usuarioLogueado: any = {};
 
   @Input() titulo:string='';
   @Input() tareas:any[]=[];
 
   constructor(private cd: ChangeDetectorRef) { }
+
+  ngOnInit(){
+    if(isLogged()) this.usuarioLogueado=isLogged();
+  }
 
   chPriority(priority:string){
     return choosePriority(priority);

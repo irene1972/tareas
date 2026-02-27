@@ -15,8 +15,10 @@
             <td>{{tarea.hours}}</td>
             <td class="buttons">
                 <a [routerLink]="['/detalle/',tarea.id]">Ver</a>
-                <a [routerLink]="['/editar/',tarea.id]" class="btn-edit">Editar</a>
-                <a (click)="borrarTarea(tarea.id)" class="btn-delete">Eliminar</a>
+                @if(tarea.user_id===usuarioLogueado.id){
+                    <a [routerLink]="['/editar/',tarea.id]" class="btn-edit">Editar</a>
+                    <a (click)="borrarTarea(tarea.id)" class="btn-delete">Eliminar</a>
+                }
             </td>
         </tr>
         }

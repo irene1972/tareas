@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { isLogged } from '../../../shared/utils/funciones';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-editar-tarea',
@@ -18,7 +18,7 @@ export class EditarTarea {
   tarea:any={};
   tarea_id:string | null='';
 
-  constructor(private cd: ChangeDetectorRef,private route: ActivatedRoute) {
+  constructor(private cd: ChangeDetectorRef,private router: Router,private route: ActivatedRoute) {
     this.miForm = new FormGroup({
       title: new FormControl('', [
         Validators.required,
@@ -69,6 +69,11 @@ export class EditarTarea {
               }
               
               this.tarea=data;
+
+              if(this.tarea.user_id !== this.usuarioLogueado.id){
+                this.router.navigate(['/home']);
+              }
+
               this.miForm.get('title')?.setValue(this.tarea.title);
               this.miForm.get('content')?.setValue(this.tarea.content);
               this.miForm.get('priority')?.setValue(this.tarea.priority);
