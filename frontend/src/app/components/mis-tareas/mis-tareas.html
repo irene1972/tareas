@@ -26,7 +26,7 @@
             <td>{{tarea.hours}}</td>
             <td class="buttons">
                 <a [routerLink]="['/detalle/',tarea.id]">Ver</a>
-                <a href="" class="btn-edit">Editar</a>
+                <a [routerLink]="['/editar/',tarea.id]" class="btn-edit">Editar</a>
                 <a (click)="borrarTarea(tarea.id)" class="btn-delete">Eliminar</a>
             </td>
         </tr>

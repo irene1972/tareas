@@ -1,0 +1,46 @@
+<section>
+    <h1>Crear tarea</h1>
+    <div [class.text-danger]="tipo===false" [class.text-success]="tipo===true">{{mensaje}}</div>
+    <form [formGroup]="miForm" (ngSubmit)="cargarDatos()">
+        <div class="form-group">
+            <label for="title">Título</label>
+            <input type="text" id="title" class="form-control" formControlName="title">
+            @if(title?.touched && title?.hasError('required')){
+            <div class="text-danger">El campo es requerido</div>
+            }@else if(title?.touched && title?.hasError('minlength')){
+            <div class="text-danger">El título debe tener al menos 3 carácteres</div>
+            }
+        </div>
+        <div class="form-group">
+            <label for="content">Contenido</label>
+            <textarea formControlName="content" id="content" class="form-control">Contenido</textarea>
+            @if(content?.touched && content?.hasError('required')){
+            <div class="text-danger">El campo es requerido</div>
+            }@else if(content?.touched && content?.hasError('minlength')){
+            <div class="text-danger">El contenido debe tener al menos 3 carácteres</div>
+            }
+        </div>
+        <div class="form-group">
+            <label for="priority">Prioridad</label>
+            <select formControlName="priority" id="priority" class="form-control">
+                <option value="" disabled>-- Seleccione una opción --</option>
+                <option value="high">Alta</option>
+                <option value="medium">Media</option>
+                <option value="low">Baja</option>
+            </select>
+            @if(priority?.touched && priority?.hasError('required')){
+            <div class="text-danger">El campo es requerido</div>
+            }
+        </div>
+
+        <div class="form-group">
+            <label for="hours">Horas presupuestadas</label>
+            <input type="number" id="hours" class="form-control" formControlName="hours">
+            @if(hours?.touched && hours?.hasError('required')){
+            <div class="text-danger">El campo es requerido</div>
+            }
+        </div>
+        <button type="submit" class="btn btn-primary">Actualizar </button>
+        
+    </form>
+</section>

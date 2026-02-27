@@ -51,6 +51,29 @@ const crearTarea = async (req, res) => {
     }
 }
 
+const editarTarea=async(req,res)=>{
+    const id=req.params.id;
+    const { user_id, title, content, priority, hours } = req.body;
+
+    try {
+        const task = new Task(user_id, title, content, priority, hours);
+        const resultado = await task.update(id);
+        console.log(resultado);
+        if (resultado) {
+            if (resultado[0].affectedRows === 1) {
+                res.json({ mensaje: 'Tarea actualizada correctamente' });
+            } else {
+                return res.status(500).json({ error: 'Ha habido un error al actualizar los datos en la bd' });
+            }
+        } else {
+            return res.status(500).json({ error: 'Ha habido un error al actualizar los datos en la bd' });
+        }
+
+    } catch (error) {
+        return res.status(500).json({ error: 'Ha habido un error al actualizar los datos' });
+    }
+}
+
 const eliminarTarea = async (req, res) => {
     const id=req.params.id;
 
@@ -75,5 +98,6 @@ export {
     getTasks,
     getTaskById,
     crearTarea,
+    editarTarea,
     eliminarTarea
 }

@@ -45,6 +45,18 @@ export class Task{
         }
     }
 
+      async update(id){
+        try {
+            const result=await pool.query('UPDATE tasks SET user_id=?,title=?,content=?,priority=?,hours=? WHERE id=?',[
+                this.user_id,this.title,this.content,this.priority,this.hours,id
+            ]);
+            return result;
+        } catch (error) {
+            return false;
+        }
+    }
+
+
     async delete(id){
         try {
             const result=await pool.query('DELETE FROM tasks WHERE id=?',[id]);
